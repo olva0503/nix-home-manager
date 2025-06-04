@@ -39,6 +39,9 @@ in {
     unzip
     harper
     golangci-lint
+    vale
+    pkgs.nodePackages.cspell
+    write-good
     (nixvim.lib.makeNixvimWithExtra builtins.currentSystem {})
   ];
   programs = {
