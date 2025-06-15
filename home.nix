@@ -32,7 +32,6 @@ in {
       echo "done!"
     '')
     vscode-extensions.vadimcn.vscode-lldb
-    rustlings
     eza
     lazygit
     gzip
@@ -42,9 +41,31 @@ in {
     vale
     pkgs.nodePackages.cspell
     write-good
+    nixd
+    tree-sitter
     (nixvim.lib.makeNixvimWithExtra builtins.currentSystem {})
   ];
   programs = {
+    alacritty.enable = true;
+    zoxide.enable = true;
+    yazi.enable = true;
+    bat = {
+      enable = true;
+      config = {
+        theme = "catppuccin";
+      };
+      themes = {
+        catppuccin = {
+          src = pkgs.fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "bat";
+            rev = "ba4d16880d63e656acced2b7d4e034e4a93f74b1";
+            sha256 = "sha256-6WVKQErGdaqb++oaXnY3i6/GuH2FhTgK0v4TN4Y0Wbw=";
+          };
+          file = "Catppuccin-mocha.tmTheme";
+        };
+      };
+    };
     git = {
       enable = true;
       userEmail = "alkitav@gmail.com";
@@ -55,7 +76,6 @@ in {
       initExtra = ''
         [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
         export PKG_CONFIG_PATH="/run/current-system/sw/lib/pkgconfig";
-        alias cat='bat'
         alias vi='nvim'
         alias ls='exa'
         # sudo chown olva:users /mnt/wsl/rancher-desktop/run/docker.sock
@@ -64,6 +84,7 @@ in {
     };
     tmux = {
       enable = true;
+      baseIndex = 1;
       plugins = with pkgs; [
         tmuxPlugins.cpu
         tmuxPlugins.resurrect
@@ -85,7 +106,6 @@ in {
 
         set-option -sa terminal-overrides ",xterm*:Tc"
         set -g mouse on
-        set -g base-index 1
         set -g pane-base-index 1
         set-window-option -g pane-base-index 1
         set-option -g renumber-windows on
@@ -96,6 +116,12 @@ in {
         bind-key -T copy-mode-vi v send-keys -X begin-selection
         bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
         bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+
+        # Use Lavender for inactive windows
+        set -g window-status-format " #[fg=#b4befe]#I:#W#[default] "
+
+        # Use Mauve for the active window
+        set -g window-status-current-format " #[fg=#cba6f7,bold]#I:#W#[default] "
       '';
     };
   };
