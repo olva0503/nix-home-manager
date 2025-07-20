@@ -12,18 +12,18 @@
 
   targetDir = "${config.home.homeDirectory}/data/ngrams/eng";
 in {
-  home.file."data/ngrams/1gram-a.gz".source = ngram;
-  home.activation.unpackNgrams = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    mkdir -p "${targetDir}"
-    echo "Extracting N-gram archive..."
-
-    # Extract only if not already extracted
-    if [ ! -d "${targetDir}" ]; then
-        ${pkgs.unzip}/bin/unzip ${ngram} -d "${targetDir}"
-    else
-      echo "Archive already extracted."
-    fi
-  '';
+  # home.file."data/ngrams/1gram-a.gz".source = ngram;
+  # home.activation.unpackNgrams = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  #   mkdir -p "${targetDir}"
+  #   echo "Extracting N-gram archive..."
+  #
+  #   # Extract only if not already extracted
+  #   if [ ! -d "${targetDir}" ]; then
+  #       ${pkgs.unzip}/bin/unzip ${ngram} -d "${targetDir}"
+  #   else
+  #     echo "Archive already extracted."
+  #   fi
+  # '';
   home.stateVersion = "25.05";
   home.enableNixpkgsReleaseCheck = false;
   home.packages = with pkgs; [
