@@ -28,9 +28,7 @@ in {
   home.enableNixpkgsReleaseCheck = false;
   home.packages = with pkgs; [
     (writeShellScriptBin "shell scripting" ''
-
-      echo "done!"
-    '')
+      '')
     vscode-extensions.vadimcn.vscode-lldb
     eza
     lazygit
@@ -42,6 +40,7 @@ in {
     pkgs.nodePackages.cspell
     write-good
     nixd
+    lazysql
     tree-sitter
     (nixvim.lib.makeNixvimWithExtra builtins.currentSystem {})
   ];
@@ -108,7 +107,7 @@ in {
         set -g mouse on
         set -g pane-base-index 1
         set-window-option -g pane-base-index 1
-        set-option -g renumber-windows on
+        set-option -g renumber-windows off
 
         # set vi-mode
         set-window-option -g mode-keys vi
