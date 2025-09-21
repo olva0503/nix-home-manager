@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  unstable,
   lib,
   ...
 }: let
@@ -31,22 +32,40 @@ in {
       '')
     vscode-extensions.vadimcn.vscode-lldb
     eza
+
+    sqls # sql language server
+    taplo
+    sqlfluff
+    gnutar
+    ripgrep
+    ripgrep-all
+    fd
+    cargo-watch
+    cargo-sweep
+    just
+    evil-helix
+    docker-ls
     lazygit
     gzip
     unzip
     harper
     golangci-lint
     vale
-    pkgs.nodePackages.cspell
+    nodePackages.cspell
     write-good
     nixd
+    elixir
+    elixir-ls
+    erlang
+    inotify-tools
+    hurl
     lazysql
     tree-sitter
     (nixvim.lib.makeNixvimWithExtra builtins.currentSystem {})
   ];
   programs = {
+    zed-editor.enable = true;
     alacritty.enable = true;
-    zoxide.enable = true;
     yazi.enable = true;
     bat = {
       enable = true;
@@ -98,10 +117,10 @@ in {
         bind C-Space send-prefix
 
         # Vim style pane selection
-        bind h select-pane -L
-        bind j select-pane -D
-        bind k select-pane -U
-        bind l select-pane -R
+        bind h select-pane -L \; resize-pane -Z
+        bind j select-pane -D \; resize-pane -Z
+        bind k select-pane -U \; resize-pane -Z
+        bind l select-pane -R \; resize-pane -Z
 
         set-option -sa terminal-overrides ",xterm*:Tc"
         set -g mouse on
